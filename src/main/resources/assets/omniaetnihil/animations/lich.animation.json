@@ -1,0 +1,22 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.geometry.lich.idle": {
+			"loop": true,
+			"bones": {
+				"rightarm": {
+					"rotation": {
+						"vector": [-122.38831, -26.7447, 19.79921]
+					}
+				},
+				"leftarm": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					}
+				}
+			},
+			"particle_effects": {}
+		}
+	},
+	"geckolib_format_version": 2
+}
