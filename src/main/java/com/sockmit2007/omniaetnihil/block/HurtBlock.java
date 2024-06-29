@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class HurtBlock extends Block {
     @Override
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
-        pEntity.push(0, 10, 0);
+        pEntity.push(0, 1, 0);
         super.stepOn(pLevel, pPos, pState, pEntity);
     }
 
