@@ -20,6 +20,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -35,6 +36,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -75,6 +77,9 @@ public class OmniaEtNihil {
 					() -> EntityType.Builder.of(ExampleEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F)
 							.clientTrackingRange(10).build("example_entity"));
 
+	public static final DeferredItem<SpawnEggItem> EXAMPLE_ENTITY_SPAWN_EGG = ITEMS.register("example_entity_spawn_egg",
+			() -> new DeferredSpawnEggItem(EXAMPLE_ENTITY, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
+
 	public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item",
 			new Item.Properties().food(new FoodProperties.Builder()
 					.alwaysEdible().nutrition(1).saturationModifier(2f).build()));
@@ -99,6 +104,7 @@ public class OmniaEtNihil {
 						output.accept(EXAMPLE_BLOCK_ITEM.get());
 						output.accept(GRABBER_JAR.get());
 						output.accept(HURT_BLOCK_ITEM.get());
+						output.accept(EXAMPLE_ENTITY_SPAWN_EGG.get());
 					}).build());
 
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
