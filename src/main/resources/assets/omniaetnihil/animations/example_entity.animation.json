@@ -1,10 +1,10 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.example_entity.idle": {
+		"idle": {
 			"loop": true
 		},
-		"animation.example_entity.walking": {
+		"walking": {
 			"loop": true
 		}
 	}
