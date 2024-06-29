@@ -21,6 +21,7 @@ group = mod_group_id
 repositories {
     mavenLocal()
     maven {url 'https://libs.azuredoom.com:4443/mods'}
+    maven {url 'https://dl.cloudsmith.io/public/tslat/sbl/maven/'}
 }
 
 base {
@@ -99,6 +100,7 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "mod.azure.azurelib:azurelib-neo-1.21:2.3.4"
+    implementation "net.tslat.smartbrainlib:SmartBrainLib-neoforge-1.21:1.14.3"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
