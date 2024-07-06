@@ -6,7 +6,9 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.sockmit2007.omniaetnihil.block.HurtBlock;
 import com.sockmit2007.omniaetnihil.client.renderer.entity.ExampleEntityRenderer;
+import com.sockmit2007.omniaetnihil.client.renderer.entity.LichEntityRenderer;
 import com.sockmit2007.omniaetnihil.entity.ExampleEntity;
+import com.sockmit2007.omniaetnihil.entity.LichEntity;
 import com.sockmit2007.omniaetnihil.item.GrabberJar;
 
 import net.minecraft.core.component.DataComponentType;
@@ -76,9 +78,15 @@ public class OmniaEtNihil {
 			.register("example_entity",
 					() -> EntityType.Builder.of(ExampleEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F)
 							.clientTrackingRange(10).build("example_entity"));
+	public static final DeferredHolder<EntityType<?>, EntityType<LichEntity>> LICH = ENTITY_TYPES
+			.register("lich",
+					() -> EntityType.Builder.of(LichEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F)
+							.clientTrackingRange(10).build("lich"));
 
 	public static final DeferredItem<SpawnEggItem> EXAMPLE_ENTITY_SPAWN_EGG = ITEMS.register("example_entity_spawn_egg",
 			() -> new DeferredSpawnEggItem(EXAMPLE_ENTITY, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
+	public static final DeferredItem<SpawnEggItem> LICH_ENTITY_SPAWN_EGG = ITEMS.register("lich_entity_spawn_egg",
+			() -> new DeferredSpawnEggItem(LICH, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
 
 	public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item",
 			new Item.Properties().food(new FoodProperties.Builder()
@@ -105,6 +113,7 @@ public class OmniaEtNihil {
 						output.accept(GRABBER_JAR.get());
 						output.accept(HURT_BLOCK_ITEM.get());
 						output.accept(EXAMPLE_ENTITY_SPAWN_EGG.get());
+						output.accept(LICH_ENTITY_SPAWN_EGG.get());
 					}).build());
 
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
@@ -133,6 +142,7 @@ public class OmniaEtNihil {
 
 	public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(EXAMPLE_ENTITY.get(), ExampleEntityRenderer::new);
+		event.registerEntityRenderer(LICH.get(), LichEntityRenderer::new);
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
@@ -149,6 +159,7 @@ public class OmniaEtNihil {
 
 	public void registerEntityAttributes(EntityAttributeCreationEvent event) {
 		event.put(EXAMPLE_ENTITY.get(), ExampleEntity.createMobAttributes().build());
+		event.put(LICH.get(), LichEntity.createMobAttributes().build());
 	}
 
 	@SubscribeEvent
