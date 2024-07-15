@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "omniaetnihil:block/tier_three_block"
+	}
+}

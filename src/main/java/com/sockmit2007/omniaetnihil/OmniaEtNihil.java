@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.sockmit2007.omniaetnihil.block.HurtBlock;
+import com.sockmit2007.omniaetnihil.block.SpreadBlock;
+import com.sockmit2007.omniaetnihil.block.TieredBlock;
 import com.sockmit2007.omniaetnihil.client.renderer.entity.ExampleEntityRenderer;
 import com.sockmit2007.omniaetnihil.client.renderer.entity.LichEntityRenderer;
 import com.sockmit2007.omniaetnihil.entity.ExampleEntity;
@@ -15,6 +17,9 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.food.FoodProperties;
@@ -64,6 +69,9 @@ public class OmniaEtNihil {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE,
 			MODID);
 
+	public static final TagKey<Block> unspreadableBlocksTag = BlockTags
+			.create(ResourceLocation.fromNamespaceAndPath(MODID, "unspreadable"));
+
 	public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block",
 			BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
 	public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block",
@@ -73,6 +81,16 @@ public class OmniaEtNihil {
 			() -> new HurtBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
 	public static final DeferredItem<BlockItem> HURT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("hurt_block",
 			HURT_BLOCK);
+
+	public static final DeferredBlock<Block> SPREAD_BLOCK = BLOCKS.register("spread_block",
+			() -> new SpreadBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> SPREAD_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("spread_block",
+			SPREAD_BLOCK);
+
+	public static final DeferredBlock<Block> TIERED_BLOCK = BLOCKS.register("tiered_block",
+			() -> new TieredBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> TIERED_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tiered_block",
+			TIERED_BLOCK);
 
 	public static final DeferredHolder<EntityType<?>, EntityType<ExampleEntity>> EXAMPLE_ENTITY = ENTITY_TYPES
 			.register("example_entity",
@@ -114,6 +132,8 @@ public class OmniaEtNihil {
 						output.accept(HURT_BLOCK_ITEM.get());
 						output.accept(EXAMPLE_ENTITY_SPAWN_EGG.get());
 						output.accept(LICH_ENTITY_SPAWN_EGG.get());
+						output.accept(SPREAD_BLOCK_ITEM.get());
+						output.accept(TIERED_BLOCK_ITEM.get());
 					}).build());
 
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

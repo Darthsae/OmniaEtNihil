@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "decayed=false": {
+            "model": "omniaetnihil:block/example_block"
+        },
+        "decayed=true": {
+            "model": "omniaetnihil:block/dull_example_block"
+        }
+    }
+}

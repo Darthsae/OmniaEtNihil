@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": { 
-        "layer0": "omniaetnihil:item/grabber_jar"
+        "layer0": "omniaetnihil:item/example_item"
     }
 }

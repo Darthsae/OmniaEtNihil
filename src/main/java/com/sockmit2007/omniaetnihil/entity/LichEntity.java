@@ -11,6 +11,7 @@ import mod.azure.azurelib.core.animation.AnimationController;
 import mod.azure.azurelib.core.animation.RawAnimation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,7 +36,7 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 
-public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner<LichEntity> {
+public class LichEntity extends PathfinderMob implements Enemy, GeoEntity, SmartBrainOwner<LichEntity> {
     public LichEntity(EntityType<? extends LichEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -51,7 +52,7 @@ public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner
     public void registerControllers(ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controllerName", 0, event -> {
             return event.setAndContinue(
-                    event.isMoving() ? RawAnimation.begin().thenLoop("walking")
+                    event.isMoving() ? RawAnimation.begin().thenLoop("idle")
                             : RawAnimation.begin().thenLoop("idle"));
         }));
     }
@@ -59,6 +60,9 @@ public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 25.0)
+                .add(Attributes.ATTACK_DAMAGE, 10.0)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.0)
+                .add(Attributes.ATTACK_SPEED, 2.4)
                 .add(Attributes.FOLLOW_RANGE, 50.0);
     }
 
@@ -73,7 +77,7 @@ public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner
     }
 
     @Override
-    public List<ExtendedSensor<LichEntity>> getSensors() {
+    public List<ExtendedSensor<? extends LichEntity>> getSensors() {
         return ObjectArrayList.of(
                 new NearbyLivingEntitySensor<>(), // This tracks nearby entities
                 new HurtBySensor<>() // This tracks the last damage source and attacker
@@ -81,7 +85,8 @@ public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner
     }
 
     @Override
-    public BrainActivityGroup<LichEntity> getCoreTasks() { // These are the tasks that run all the time (usually)
+    public BrainActivityGroup<? extends LichEntity> getCoreTasks() { // These are the tasks that run all the time
+                                                                     // (usually)
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(), // Have the entity turn to face and look at its current look target
                 new MoveToWalkTarget<>()); // Walk towards the current walk target
@@ -89,27 +94,26 @@ public class LichEntity extends Mob implements Enemy, GeoEntity, SmartBrainOwner
 
     @SuppressWarnings("unchecked")
     @Override
-    public BrainActivityGroup<LichEntity> getIdleTasks() { // These are the tasks that run when the mob isn't doing
-                                                           // anything
+    public BrainActivityGroup<? extends LichEntity> getIdleTasks() { // These are the tasks that run when the mob isn't
+                                                                     // doing
+        // anything
         // else (usually)
         return BrainActivityGroup.idleTasks(
-                new FirstApplicableBehaviour<LichEntity>( // Run only one of the below behaviours, trying each one in
-                                                          // order.
-                        // Include the generic type because JavaC is silly
-                        new TargetOrRetaliate<>(), // Set the attack target and walk target based on nearby entities
-                        new SetPlayerLookTarget<>(), // Set the look target for the nearest player
-                        new SetRandomLookTarget<>()), // Set a random look target
-                new OneRandomBehaviour<>( // Run a random task from the below options
-                        new SetRandomWalkTarget<>(), // Set a random walk target to a nearby position
-                        new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)))); // Do nothing for 1.5->3
-                                                                                             // seconds
+                new FirstApplicableBehaviour<LichEntity>(
+                        new TargetOrRetaliate<>(),
+                        new SetPlayerLookTarget<>(),
+                        new SetRandomLookTarget<>()),
+                new OneRandomBehaviour<>(
+                        new SetRandomWalkTarget<>().speedModifier(1),
+                        new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));
     }
 
     @Override
-    public BrainActivityGroup<LichEntity> getFightTasks() { // These are the tasks that handle fighting
+    public BrainActivityGroup<? extends LichEntity> getFightTasks() { // These are the tasks that handle fighting
         return BrainActivityGroup.fightTasks(
                 new InvalidateAttackTarget<>(), // Cancel fighting if the target is no longer valid
                 new SetWalkTargetToAttackTarget<>(), // Set the walk target to the attack target
-                new AnimatableMeleeAttack<>(0)); // Melee attack the target if close enough
+                new AnimatableMeleeAttack<>(0).whenStarting(entity -> setAggressive(true))
+                        .whenStopping(entity -> setAggressive(false))); // Melee attack the target if close enough
     }
 }

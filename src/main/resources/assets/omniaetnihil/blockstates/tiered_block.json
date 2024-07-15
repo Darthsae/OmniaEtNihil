@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "tier=0": {
+            "model": "omniaetnihil:block/tier_one_block"
+        },
+        "tier=1": {
+            "model": "omniaetnihil:block/tier_two_block"
+        },
+        "tier=2": {
+            "model": "omniaetnihil:block/tier_three_block"
+        },
+        "tier=3": {
+            "model": "omniaetnihil:block/tier_four_block"
+        }
+    }
+}
