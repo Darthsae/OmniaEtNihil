@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "omniaetnihil:block/example_block"
+        }
+    }
+}

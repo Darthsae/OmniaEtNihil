@@ -4,14 +4,19 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.sockmit2007.omniaetnihil.block.CorruptStorage;
 import com.sockmit2007.omniaetnihil.block.HurtBlock;
 import com.sockmit2007.omniaetnihil.block.SpreadBlock;
 import com.sockmit2007.omniaetnihil.block.TieredBlock;
+import com.sockmit2007.omniaetnihil.block.entity.CorruptStorageBlockEntity;
+import com.sockmit2007.omniaetnihil.client.renderer.block.CorruptStorageRenderer;
 import com.sockmit2007.omniaetnihil.client.renderer.entity.ExampleEntityRenderer;
 import com.sockmit2007.omniaetnihil.client.renderer.entity.LichEntityRenderer;
 import com.sockmit2007.omniaetnihil.entity.ExampleEntity;
 import com.sockmit2007.omniaetnihil.entity.LichEntity;
 import com.sockmit2007.omniaetnihil.item.GrabberJar;
+import com.sockmit2007.omniaetnihil.screen.CorruptStorageMenu;
+import com.sockmit2007.omniaetnihil.screen.CorruptStorageScreen;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -22,13 +27,17 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
@@ -43,6 +52,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -68,9 +78,33 @@ public class OmniaEtNihil {
 	public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(MODID);
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE,
 			MODID);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister
+			.create(Registries.BLOCK_ENTITY_TYPE, MODID);
+	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU,
+			MODID);
+
+	private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> register(String name,
+			MenuType.MenuSupplier<T> menu) {
+		return MENU_TYPES.register(name, () -> new MenuType<>(menu, FeatureFlags.VANILLA_SET));
+	}
+
+	public static final DeferredHolder<MenuType<?>, MenuType<CorruptStorageMenu>> CORRUPT_STORAGE_MENU = register(
+			"corrupt_storage",
+			CorruptStorageMenu::new);
 
 	public static final TagKey<Block> unspreadableBlocksTag = BlockTags
 			.create(ResourceLocation.fromNamespaceAndPath(MODID, "unspreadable"));
+
+	public static final DeferredBlock<Block> CORRUPT_STORAGE = BLOCKS.register("corrupt_storage",
+			() -> new CorruptStorage(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> CORRUPT_STORAGE_ITEM = ITEMS.registerSimpleBlockItem(
+			"corrupt_storage",
+			CORRUPT_STORAGE);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CorruptStorageBlockEntity>> CORRUPT_STORAGE_BLOCK_ENTITY = BLOCK_ENTITY_TYPES
+			.register("corrupt_storage",
+					() -> BlockEntityType.Builder.of(CorruptStorageBlockEntity::new, CORRUPT_STORAGE.get())
+							.build(null));
 
 	public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block",
 			BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
@@ -134,6 +168,7 @@ public class OmniaEtNihil {
 						output.accept(LICH_ENTITY_SPAWN_EGG.get());
 						output.accept(SPREAD_BLOCK_ITEM.get());
 						output.accept(TIERED_BLOCK_ITEM.get());
+						output.accept(CORRUPT_STORAGE_ITEM.get());
 					}).build());
 
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
@@ -142,7 +177,9 @@ public class OmniaEtNihil {
 		BLOCKS.register(modEventBus);
 		ITEMS.register(modEventBus);
 		ENTITY_TYPES.register(modEventBus);
+		BLOCK_ENTITY_TYPES.register(modEventBus);
 		CREATIVE_MODE_TABS.register(modEventBus);
+		MENU_TYPES.register(modEventBus);
 
 		DATA_COMPONENTS.register(modEventBus);
 		ATTACHMENT_TYPES.register(modEventBus);
@@ -156,13 +193,19 @@ public class OmniaEtNihil {
 		modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
 		if (dist == Dist.CLIENT) {
+			modEventBus.addListener(this::registerMenuScreens);
 			modEventBus.addListener(this::registerEntityRenderers);
 		}
+	}
+
+	public void registerMenuScreens(RegisterMenuScreensEvent event) {
+		event.register(CORRUPT_STORAGE_MENU.get(), CorruptStorageScreen::new);
 	}
 
 	public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(EXAMPLE_ENTITY.get(), ExampleEntityRenderer::new);
 		event.registerEntityRenderer(LICH.get(), LichEntityRenderer::new);
+		event.registerBlockEntityRenderer(CORRUPT_STORAGE_BLOCK_ENTITY.get(), context -> new CorruptStorageRenderer());
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {

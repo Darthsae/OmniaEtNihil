@@ -5,13 +5,16 @@
     "item.omniaetnihil.hurt_block": "Hurt Block",
     "item.omniaetnihil.tiered_block": "Tiered Block",
     "item.omniaetnihil.spread_block": "Spread Block",
+    "item.omniaetnihil.corrupt_storage": "Corrupt Storage",
     "item.omniaetnihil.example_entity_spawn_egg": "Example Entity",
     "item.omniaetnihil.lich_entity_spawn_egg": "Lich",
     "entity.omniaetnihil.lich": "Lich",
     "entity.omniaetnihil.example_entity": "Example Entity",
+    "block.omniaetnihil.corrupt_storage": "Corrupt Storage",
     "block.omniaetnihil.tiered_block": "Tiered Block",
     "block.omniaetnihil.spread_block": "Spread Block",
     "block.omniaetnihil.hurt_block": "Hurt Block",
     "block.omniaetnihil.example_block": "Example Block",
-    "itemGroup.omniaetnihil.omniaetnihil_tab": "Omnia Et Nihil"
+    "itemGroup.omniaetnihil.omniaetnihil_tab": "Omnia Et Nihil",
+    "menu.omniaetnihil.corrupt_storage": "Corrupt Storage"
 }
