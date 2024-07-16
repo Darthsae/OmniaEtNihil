@@ -1,5 +1,6 @@
 package com.sockmit2007.omniaetnihil;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -17,14 +18,23 @@ import com.sockmit2007.omniaetnihil.entity.LichEntity;
 import com.sockmit2007.omniaetnihil.item.GrabberJar;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageMenu;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageScreen;
+import com.sockmit2007.omniaetnihil.datagen.ModItemModelProvider;
+import com.sockmit2007.omniaetnihil.datagen.ModLanguageProvider;
 
+import net.minecraft.DetectedVersion;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.InclusiveRange;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.flag.FeatureFlags;
@@ -55,6 +65,8 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -69,6 +81,7 @@ public class OmniaEtNihil {
 	public static final String MODID = "omniaetnihil";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
+	// #region Registers
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister
@@ -82,6 +95,8 @@ public class OmniaEtNihil {
 			.create(Registries.BLOCK_ENTITY_TYPE, MODID);
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU,
 			MODID);
+
+	// #endregion
 
 	private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> register(String name,
 			MenuType.MenuSupplier<T> menu) {
@@ -144,6 +159,45 @@ public class OmniaEtNihil {
 			new Item.Properties().food(new FoodProperties.Builder()
 					.alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
+	// #region Drops
+	public static final DeferredItem<Item> ABYSSAL_FLESH = ITEMS.registerSimpleItem("abyssal_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> ABYSSAL_BONE = ITEMS.registerSimpleItem("abyssal_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> AQUATIC_FLESH = ITEMS.registerSimpleItem("aquatic_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> AQUATIC_BONE = ITEMS.registerSimpleItem("aquatic_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> ARCANE_FLESH = ITEMS.registerSimpleItem("arcane_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> ARCANE_BONE = ITEMS.registerSimpleItem("arcane_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> DIVINE_FLESH = ITEMS.registerSimpleItem("divine_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> DIVINE_BONE = ITEMS.registerSimpleItem("divine_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> ETHEREAL_FLESH = ITEMS.registerSimpleItem("ethereal_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> ETHEREAL_BONE = ITEMS.registerSimpleItem("ethereal_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> INFERNAL_FLESH = ITEMS.registerSimpleItem("infernal_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> INFERNAL_BONE = ITEMS.registerSimpleItem("infernal_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> PETRIFIED_FLESH = ITEMS.registerSimpleItem("petrified_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> PETRIFIED_BONE = ITEMS.registerSimpleItem("petrified_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> VERDANT_FLESH = ITEMS.registerSimpleItem("verdant_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> VERDANT_BONE = ITEMS.registerSimpleItem("verdant_bone",
+			new Item.Properties());
+	public static final DeferredItem<Item> YELLOW_FLESH = ITEMS.registerSimpleItem("yellow_flesh",
+			new Item.Properties());
+	public static final DeferredItem<Item> YELLOW_BONE = ITEMS.registerSimpleItem("yellow_bone",
+			new Item.Properties());
+	// #endregion
+
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> MANA_DATA_COMPONENT = DATA_COMPONENTS
 			.registerComponentType(
 					"mana",
@@ -172,6 +226,7 @@ public class OmniaEtNihil {
 					}).build());
 
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
+		modEventBus.addListener(this::dataSetup);
 		modEventBus.addListener(this::commonSetup);
 
 		BLOCKS.register(modEventBus);
@@ -223,6 +278,22 @@ public class OmniaEtNihil {
 	public void registerEntityAttributes(EntityAttributeCreationEvent event) {
 		event.put(EXAMPLE_ENTITY.get(), ExampleEntity.createMobAttributes().build());
 		event.put(LICH.get(), LichEntity.createMobAttributes().build());
+	}
+
+	public void dataSetup(GatherDataEvent event) {
+		DataGenerator generator = event.getGenerator();
+		ExistingFileHelper fileHelper = event.getExistingFileHelper();
+		PackOutput packOutput = generator.getPackOutput();
+		generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, fileHelper));
+
+		generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput, MODID));
+
+		// pack.mcmeta
+		generator.addProvider(true,
+				new PackMetadataGenerator(packOutput).add(PackMetadataSection.TYPE, new PackMetadataSection(
+						Component.translatable("pack.omniaetnihil.mod.description"),
+						DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA),
+						Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE)))));
 	}
 
 	@SubscribeEvent
