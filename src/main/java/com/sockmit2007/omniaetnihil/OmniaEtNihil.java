@@ -19,7 +19,6 @@ import com.sockmit2007.omniaetnihil.item.GrabberJar;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageMenu;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageScreen;
 import com.sockmit2007.omniaetnihil.datagen.ModItemModelProvider;
-import com.sockmit2007.omniaetnihil.datagen.ModLanguageProvider;
 
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.component.DataComponentType;
@@ -225,6 +224,32 @@ public class OmniaEtNihil {
 						output.accept(CORRUPT_STORAGE_ITEM.get());
 					}).build());
 
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DROPS_TAB = CREATIVE_MODE_TABS
+			.register("drops_tab", () -> CreativeModeTab.builder()
+					.title(Component.translatable("itemGroup.omniaetnihil.drops_tab"))
+					.withTabsBefore(CreativeModeTabs.COMBAT)
+					.icon(() -> ABYSSAL_FLESH.get().getDefaultInstance())
+					.displayItems((parameters, output) -> {
+						output.accept(ABYSSAL_BONE.get());
+						output.accept(ABYSSAL_FLESH.get());
+						output.accept(AQUATIC_BONE.get());
+						output.accept(AQUATIC_FLESH.get());
+						output.accept(ARCANE_BONE.get());
+						output.accept(ARCANE_FLESH.get());
+						output.accept(DIVINE_BONE.get());
+						output.accept(DIVINE_FLESH.get());
+						output.accept(ETHEREAL_BONE.get());
+						output.accept(ETHEREAL_FLESH.get());
+						output.accept(INFERNAL_BONE.get());
+						output.accept(INFERNAL_FLESH.get());
+						output.accept(PETRIFIED_BONE.get());
+						output.accept(PETRIFIED_FLESH.get());
+						output.accept(VERDANT_BONE.get());
+						output.accept(VERDANT_FLESH.get());
+						output.accept(YELLOW_BONE.get());
+						output.accept(YELLOW_FLESH.get());
+					}).build());
+
 	public OmniaEtNihil(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		modEventBus.addListener(this::dataSetup);
 		modEventBus.addListener(this::commonSetup);
@@ -286,7 +311,8 @@ public class OmniaEtNihil {
 		PackOutput packOutput = generator.getPackOutput();
 		generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, fileHelper));
 
-		generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput, MODID));
+		// generator.addProvider(event.includeClient(), new
+		// ModLanguageProvider(packOutput, MODID));
 
 		// pack.mcmeta
 		generator.addProvider(true,
