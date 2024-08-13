@@ -28,7 +28,7 @@ public class ModLanguageProvider extends LanguageProvider {
         this.addItem(OmniaEtNihil.PETRIFIED_BONE, "Petrified Bone");
         this.addItem(OmniaEtNihil.VERDANT_FLESH, "Verdant Flesh");
         this.addItem(OmniaEtNihil.VERDANT_BONE, "Verdant Bone");
-        this.addItem(OmniaEtNihil.YELLOW_FLESH, "Yellow Flesh");
-        this.addItem(OmniaEtNihil.YELLOW_BONE, "Yellow Bone");
+        this.addItem(OmniaEtNihil.RADIANT_FLESH, "Yellow Flesh");
+        this.addItem(OmniaEtNihil.RADIANT_BONE, "Yellow Bone");
     }
 }

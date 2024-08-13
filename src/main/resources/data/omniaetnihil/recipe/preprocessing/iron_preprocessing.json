@@ -1,0 +1,22 @@
+{
+  "type": "omniaetnihil:preprocessing",
+  "input": {
+    "input": {
+      "item": "minecraft:raw_iron"
+    },
+    "count": 1
+  },
+  "tier": 1,
+  "fluidInput": {
+    "id": "minecraft:water",
+    "amount": 1000
+  },
+  "ticks": 600,
+  "output": {
+    "item": "omniaetnihil:preprocessed_iron_ore"
+  },
+  "byproduct": {
+    "item": "omniaetnihil:large_rock",
+    "count": 2
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "type": "omniaetnihil:example_crafting",
+  "inputs": [
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    }
+  ],
+  "ticks": 600,
+  "output": {
+    "item": "minecraft:redstone"
+  },
+  "byproduct": {
+    "item": "minecraft:redstone"
+  }
+}

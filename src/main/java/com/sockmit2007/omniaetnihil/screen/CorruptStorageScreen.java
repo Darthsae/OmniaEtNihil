@@ -8,9 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class CorruptStorageScreen extends AbstractContainerScreen<CorruptStorageMenu> {
-    private static final ResourceLocation CORRUPT_STORAGE_TEXTURE = ResourceLocation.fromNamespaceAndPath(
-            OmniaEtNihil.MODID,
-            "textures/gui/menu/corrupt_storage.png");
+    private static final ResourceLocation CORRUPT_STORAGE_TEXTURE = ResourceLocation
+            .fromNamespaceAndPath(OmniaEtNihil.MODID, "textures/gui/menu/corrupt_storage.png");
     // private static final ResourceLocation ITEM_SLOT_SPRITE =
     // ResourceLocation.fromNamespaceAndPath(OmniaEtNihil.MODID,
     // "textures/gui/menu/item_slot.png");
@@ -49,18 +48,9 @@ public class CorruptStorageScreen extends AbstractContainerScreen<CorruptStorage
         guiGraphics.blit(CORRUPT_STORAGE_TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
         /*
-         * int slotX = i + 49;
-         * int slotY = j + 24;
+         * int slotX = i + 49; int slotY = j + 24;
          * 
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY + 32, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY + 64, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY + 32, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY + 64, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY + 32, 20, 20);
-         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY + 64, 20, 20);
+         * guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY + 32, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX, slotY + 64, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY + 32, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 32, slotY + 64, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY + 32, 20, 20); guiGraphics.blitSprite(ITEM_SLOT_SPRITE, slotX + 64, slotY + 64, 20, 20);
          */
     }
 }

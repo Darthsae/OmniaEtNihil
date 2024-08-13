@@ -24,8 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     public void item(Item item, String location) {
-        this.withExistingParent(this.itemName(item), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + this.itemName(item)));
+        this.withExistingParent(this.itemName(item), mcLoc("item/generated")).texture("layer0", modLoc("item/" + location + this.itemName(item)));
     }
 
     @Override
@@ -46,7 +45,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         this.item(OmniaEtNihil.PETRIFIED_BONE.get(), "drops/");
         this.item(OmniaEtNihil.VERDANT_FLESH.get(), "drops/");
         this.item(OmniaEtNihil.VERDANT_BONE.get(), "drops/");
-        this.item(OmniaEtNihil.YELLOW_FLESH.get(), "drops/");
-        this.item(OmniaEtNihil.YELLOW_BONE.get(), "drops/");
+        this.item(OmniaEtNihil.RADIANT_FLESH.get(), "drops/");
+        this.item(OmniaEtNihil.RADIANT_BONE.get(), "drops/");
     }
 }

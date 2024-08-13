@@ -1,6 +1,8 @@
 {
     "item.omniaetnihil.example_item": "Example Item",
     "item.omniaetnihil.example_block": "Example Block",
+    "item.omniaetnihil.example_crafter": "Example Crafter",
+    "item.omniaetnihil.crude_preprocessor": "Crude Preprocessor",
     "item.omniaetnihil.grabber_jar": "Grabber Jar",
     "item.omniaetnihil.hurt_block": "Hurt Block",
     "item.omniaetnihil.tiered_block": "Tiered Block",
@@ -24,16 +26,20 @@
     "item.omniaetnihil.petrified_flesh": "Petrified Flesh",
     "item.omniaetnihil.verdant_bone": "Verdant Bone",
     "item.omniaetnihil.verdant_flesh": "Verdant Flesh",
-    "item.omniaetnihil.yellow_bone": "Yellow Bone",
-    "item.omniaetnihil.yellow_flesh": "Yellow Flesh",
+    "item.omniaetnihil.radiant_bone": "Radiant Bone",
+    "item.omniaetnihil.radiant_flesh": "Radiant Flesh",
     "entity.omniaetnihil.lich": "Lich",
     "entity.omniaetnihil.example_entity": "Example Entity",
+    "block.omniaetnihil.crude_preprocessor": "Crude Preprocessor",
     "block.omniaetnihil.corrupt_storage": "Corrupt Storage",
+    "block.omniaetnihil.example_crafter": "Example Crafter",
     "block.omniaetnihil.tiered_block": "Tiered Block",
     "block.omniaetnihil.spread_block": "Spread Block",
     "block.omniaetnihil.hurt_block": "Hurt Block",
     "block.omniaetnihil.example_block": "Example Block",
     "itemGroup.omniaetnihil.omniaetnihil_tab": "Omnia Et Nihil",
     "itemGroup.omniaetnihil.drops_tab": "Drops",
-    "menu.omniaetnihil.corrupt_storage": "Corrupt Storage"
+    "menu.omniaetnihil.crude_preprocessor": "Crude Preprocessor",
+    "menu.omniaetnihil.corrupt_storage": "Corrupt Storage",
+    "menu.omniaetnihil.example_crafter": "Example Crafter"
 }

@@ -1,0 +1,19 @@
+{
+  "type": "omniaetnihil:jaw_crushing",
+  "input": {
+    "input": {
+      "item": "omniaetnihil:preprocessed_iron_ore"
+    },
+    "count": 1
+  },
+  "tier": 1,
+  "ticks": 600,
+  "output": {
+    "item": "omniaetnihil:large_crushed_iron_ore",
+    "count": 2
+  },
+  "byproduct": {
+    "item": "omniaetnihil:impure_iron_dust",
+    "count": 3
+  }
+}

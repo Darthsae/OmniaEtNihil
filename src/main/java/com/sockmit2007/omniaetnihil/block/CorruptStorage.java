@@ -45,10 +45,6 @@ public class CorruptStorage extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         } else {
             this.openContainer(level, pos, player);
-            if (level.getBlockEntity(pos) instanceof CorruptStorageBlockEntity corruptStorageBlockEntity) {
-                corruptStorageBlockEntity.applyEffects();
-                this.triggerAnim("baseAnim", "anim");
-            }
             return InteractionResult.CONSUME;
         }
     }

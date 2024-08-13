@@ -1,0 +1,66 @@
+{
+  "type": "omniaetnihil:example_crafting",
+  "inputs": [
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 2
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 3
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 4
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 5
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 6
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 7
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 8
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone"
+      },
+      "count": 9
+    }
+  ],
+  "ticks": 300,
+  "output": {
+    "item": "minecraft:redstone"
+  },
+  "byproduct": {
+    "item": "minecraft:gunpowder"
+  }
+}

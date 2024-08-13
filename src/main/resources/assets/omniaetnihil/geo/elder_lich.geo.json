@@ -17,7 +17,10 @@
 					"cubes": [
 						{"origin": [-4, 17, -2], "size": [8, 12, 4], "uv": [46, 0]},
 						{"origin": [-4.5, 11, -2.5], "size": [9, 18, 5], "uv": [0, 0], "mirror": true}
-					]
+					],
+					"locators": {
+						"bodyparticleanchor": [0, 15, 0]
+					}
 				},
 				{
 					"name": "head",
@@ -135,7 +138,7 @@
 						}
 					],
 					"locators": {
-						"locator": [5, 17, 0]
+						"righthandparticleanchor": [5, 17, 0]
 					}
 				},
 				{

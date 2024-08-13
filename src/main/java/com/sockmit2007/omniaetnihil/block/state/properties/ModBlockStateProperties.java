@@ -6,5 +6,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 public class ModBlockStateProperties {
 
     public static final BooleanProperty DECAYED = BooleanProperty.create("decayed");
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 3);
 }
