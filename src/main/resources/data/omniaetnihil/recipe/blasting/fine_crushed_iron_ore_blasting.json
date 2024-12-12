@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:blasting",
+    "ingredient": {
+        "item": "omniaetnihil:fine_crushed_iron_ore"
+    },
+    "result": {
+        "id": "minecraft:iron_ingot"
+    },
+    "experience": 2.5,
+    "cookingtime": 200
+}

@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "#up",
+		"down": "omniaetnihil:block/machine_top_no_port",
+		"east": "omniaetnihil:block/machine_side_item_port",
+		"north": "omniaetnihil:block/machine_front_active",
+		"south": "omniaetnihil:block/machine_side_item_port",
+		"up": "omniaetnihil:block/machine_top_no_port",
+		"west": "omniaetnihil:block/machine_side_energy_port"
+	}
+}

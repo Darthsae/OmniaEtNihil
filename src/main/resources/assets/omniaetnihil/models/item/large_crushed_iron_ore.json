@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": { 
-        "layer0": "omniaetnihil:item/example_item"
+        "layer0": "omniaetnihil:item/crushed_ores/large_crushed_iron_ore"
     }
 }

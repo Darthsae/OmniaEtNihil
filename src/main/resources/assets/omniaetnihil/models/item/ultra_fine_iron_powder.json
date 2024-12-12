@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": { 
-        "layer0": "omniaetnihil:item/dusts/impure_iron_dust"
+        "layer0": "omniaetnihil:item/powders/ultra_fine_iron_powder"
     }
 }

@@ -31,9 +31,7 @@ public class ExampleEntity extends Mob implements Enemy, GeoEntity {
     @Override
     public void registerControllers(ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controllerName", 0, event -> {
-            return event.setAndContinue(
-                    event.isMoving() ? RawAnimation.begin().thenLoop("walking")
-                            : RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(event.isMoving() ? RawAnimation.begin().thenLoop("walking") : RawAnimation.begin().thenLoop("idle"));
         }));
     }
 
@@ -45,9 +43,7 @@ public class ExampleEntity extends Mob implements Enemy, GeoEntity {
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0)
-                .add(Attributes.FOLLOW_RANGE, 50.0);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 25.0).add(Attributes.FOLLOW_RANGE, 50.0);
     }
 
 }

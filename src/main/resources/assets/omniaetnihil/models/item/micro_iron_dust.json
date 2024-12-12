@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": { 
-        "layer0": "omniaetnihil:item/example_item"
+        "layer0": "omniaetnihil:item/dusts/micro_iron_dust"
     }
 }

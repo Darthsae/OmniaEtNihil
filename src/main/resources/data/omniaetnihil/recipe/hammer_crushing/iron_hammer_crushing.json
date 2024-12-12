@@ -1,0 +1,19 @@
+{
+  "type": "omniaetnihil:hammer_crushing",
+  "input": {
+    "input": {
+      "item": "omniaetnihil:small_crushed_iron_ore"
+    },
+    "count": 3
+  },
+  "tier": 1,
+  "ticks": 600,
+  "output": {
+    "item": "omniaetnihil:fine_crushed_iron_ore",
+    "count": 5
+  },
+  "byproduct": {
+    "item": "omniaetnihil:micro_iron_dust",
+    "count": 6
+  }
+}

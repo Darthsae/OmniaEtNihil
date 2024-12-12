@@ -1,0 +1,19 @@
+{
+  "type": "omniaetnihil:cone_crushing",
+  "input": {
+    "input": {
+      "item": "omniaetnihil:large_crushed_iron_ore"
+    },
+    "count": 2
+  },
+  "tier": 1,
+  "ticks": 600,
+  "output": {
+    "item": "omniaetnihil:medium_crushed_iron_ore",
+    "count": 3
+  },
+  "byproduct": {
+    "item": "omniaetnihil:fine_iron_dust",
+    "count": 2
+  }
+}

@@ -4,9 +4,12 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 
-import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.logging.LogUtils;
 import com.sockmit2007.omniaetnihil.block.CorruptStorage;
+import com.sockmit2007.omniaetnihil.block.CrudeConeCrusher;
+import com.sockmit2007.omniaetnihil.block.CrudeHammerCrusher;
+import com.sockmit2007.omniaetnihil.block.CrudeImpactCrusher;
 import com.sockmit2007.omniaetnihil.block.CrudeJawCrusher;
 import com.sockmit2007.omniaetnihil.block.CrudePreprocessor;
 import com.sockmit2007.omniaetnihil.block.ExampleCrafter;
@@ -15,6 +18,9 @@ import com.sockmit2007.omniaetnihil.block.PrecisionCraftingTable;
 import com.sockmit2007.omniaetnihil.block.SpreadBlock;
 import com.sockmit2007.omniaetnihil.block.TieredBlock;
 import com.sockmit2007.omniaetnihil.block.entity.CorruptStorageBlockEntity;
+import com.sockmit2007.omniaetnihil.block.entity.CrudeConeCrusherBlockEntity;
+import com.sockmit2007.omniaetnihil.block.entity.CrudeHammerCrusherBlockEntity;
+import com.sockmit2007.omniaetnihil.block.entity.CrudeImpactCrusherBlockEntity;
 import com.sockmit2007.omniaetnihil.block.entity.CrudeJawCrusherBlockEntity;
 import com.sockmit2007.omniaetnihil.block.entity.CrudePreprocessorBlockEntity;
 import com.sockmit2007.omniaetnihil.block.entity.ExampleCrafterBlockEntity;
@@ -28,14 +34,23 @@ import com.sockmit2007.omniaetnihil.client.renderer.entity.LichEntityRenderer;
 import com.sockmit2007.omniaetnihil.entity.ExampleEntity;
 import com.sockmit2007.omniaetnihil.entity.LichEntity;
 import com.sockmit2007.omniaetnihil.item.GrabberJar;
+import com.sockmit2007.omniaetnihil.recipe.ConeCrushingRecipe;
 import com.sockmit2007.omniaetnihil.recipe.ExampleCraftingRecipe;
+import com.sockmit2007.omniaetnihil.recipe.HammerCrushingRecipe;
+import com.sockmit2007.omniaetnihil.recipe.ImpactCrushingRecipe;
 import com.sockmit2007.omniaetnihil.recipe.JawCrushingRecipe;
 import com.sockmit2007.omniaetnihil.recipe.PrecisionCraftingRecipe;
 import com.sockmit2007.omniaetnihil.recipe.PreprocessingRecipe;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageMenu;
 import com.sockmit2007.omniaetnihil.screen.CorruptStorageScreen;
+import com.sockmit2007.omniaetnihil.screen.CrudeConeCrusherMenu;
+import com.sockmit2007.omniaetnihil.screen.CrudeConeCrusherScreen;
+import com.sockmit2007.omniaetnihil.screen.CrudeHammerCrusherMenu;
+import com.sockmit2007.omniaetnihil.screen.CrudeHammerCrusherScreen;
 import com.sockmit2007.omniaetnihil.screen.CrudeJawCrusherMenu;
 import com.sockmit2007.omniaetnihil.screen.CrudeJawCrusherScreen;
+import com.sockmit2007.omniaetnihil.screen.CrudeImpactCrusherMenu;
+import com.sockmit2007.omniaetnihil.screen.CrudeImpactCrusherScreen;
 import com.sockmit2007.omniaetnihil.screen.CrudePreprocessorMenu;
 import com.sockmit2007.omniaetnihil.screen.CrudePreprocessorScreen;
 import com.sockmit2007.omniaetnihil.screen.ExampleCrafterMenu;
@@ -151,6 +166,9 @@ public class OmniaEtNihil {
 	public static final DeferredHolder<MenuType<?>, MenuType<ExampleCrafterMenu>> EXAMPLE_CRAFTER_MENU = register("example_crafter", ExampleCrafterMenu::new);
 	public static final DeferredHolder<MenuType<?>, MenuType<CrudePreprocessorMenu>> CRUDE_PREPROCESSOR_MENU = register("crude_preprocessor", CrudePreprocessorMenu::new);
 	public static final DeferredHolder<MenuType<?>, MenuType<CrudeJawCrusherMenu>> CRUDE_JAW_CRUSHER_MENU = register("crude_jaw_crusher", CrudeJawCrusherMenu::new);
+	public static final DeferredHolder<MenuType<?>, MenuType<CrudeConeCrusherMenu>> CRUDE_CONE_CRUSHER_MENU = register("crude_cone_crusher", CrudeConeCrusherMenu::new);
+	public static final DeferredHolder<MenuType<?>, MenuType<CrudeImpactCrusherMenu>> CRUDE_IMPACT_CRUSHER_MENU = register("crude_impact_crusher", CrudeImpactCrusherMenu::new);
+	public static final DeferredHolder<MenuType<?>, MenuType<CrudeHammerCrusherMenu>> CRUDE_HAMMER_CRUSHER_MENU = register("crude_hammer_crusher", CrudeHammerCrusherMenu::new);
 	public static final DeferredHolder<MenuType<?>, MenuType<PrecisionCraftingTableMenu>> PRECISION_CRAFTING_TABLE_MENU = register("precision_crafting_table", PrecisionCraftingTableMenu::new);
 	// #endregion
 
@@ -171,6 +189,15 @@ public class OmniaEtNihil {
 
 	public static final DeferredBlock<Block> CRUDE_JAW_CRUSHER = BLOCKS.register("crude_jaw_crusher", () -> new CrudeJawCrusher(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
 	public static final DeferredItem<BlockItem> CRUDE_JAW_CRUSHER_ITEM = ITEMS.registerSimpleBlockItem("crude_jaw_crusher", CRUDE_JAW_CRUSHER);
+
+	public static final DeferredBlock<Block> CRUDE_CONE_CRUSHER = BLOCKS.register("crude_cone_crusher", () -> new CrudeConeCrusher(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> CRUDE_CONE_CRUSHER_ITEM = ITEMS.registerSimpleBlockItem("crude_cone_crusher", CRUDE_CONE_CRUSHER);
+
+	public static final DeferredBlock<Block> CRUDE_IMPACT_CRUSHER = BLOCKS.register("crude_impact_crusher", () -> new CrudeImpactCrusher(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> CRUDE_IMPACT_CRUSHER_ITEM = ITEMS.registerSimpleBlockItem("crude_impact_crusher", CRUDE_IMPACT_CRUSHER);
+
+	public static final DeferredBlock<Block> CRUDE_HAMMER_CRUSHER = BLOCKS.register("crude_hammer_crusher", () -> new CrudeHammerCrusher(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
+	public static final DeferredItem<BlockItem> CRUDE_HAMMER_CRUSHER_ITEM = ITEMS.registerSimpleBlockItem("crude_hammer_crusher", CRUDE_HAMMER_CRUSHER);
 
 	public static final DeferredBlock<Block> PRECISION_CRAFTING_TABLE = BLOCKS.register("precision_crafting_table", () -> new PrecisionCraftingTable(BlockBehaviour.Properties.of().noOcclusion().mapColor(MapColor.STONE)));
 	public static final DeferredItem<BlockItem> PRECISION_CRAFTING_TABLE_ITEM = ITEMS.registerSimpleBlockItem("precision_crafting_table", PRECISION_CRAFTING_TABLE);
@@ -193,6 +220,9 @@ public class OmniaEtNihil {
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CorruptStorageBlockEntity>> CORRUPT_STORAGE_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("corrupt_storage", () -> BlockEntityType.Builder.of(CorruptStorageBlockEntity::new, CORRUPT_STORAGE.get()).build(null));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudePreprocessorBlockEntity>> CRUDE_PREPROCESSOR_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("crude_preprocessor", () -> BlockEntityType.Builder.of(CrudePreprocessorBlockEntity::new, CRUDE_PREPROCESSOR.get()).build(null));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeJawCrusherBlockEntity>> CRUDE_JAW_CRUSHER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("crude_jaw_crusher", () -> BlockEntityType.Builder.of(CrudeJawCrusherBlockEntity::new, CRUDE_JAW_CRUSHER.get()).build(null));
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeConeCrusherBlockEntity>> CRUDE_CONE_CRUSHER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("crude_cone_crusher", () -> BlockEntityType.Builder.of(CrudeConeCrusherBlockEntity::new, CRUDE_CONE_CRUSHER.get()).build(null));
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeImpactCrusherBlockEntity>> CRUDE_IMPACT_CRUSHER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("crude_impact_crusher", () -> BlockEntityType.Builder.of(CrudeImpactCrusherBlockEntity::new, CRUDE_IMPACT_CRUSHER.get()).build(null));
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeHammerCrusherBlockEntity>> CRUDE_HAMMER_CRUSHER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("crude_hammer_crusher", () -> BlockEntityType.Builder.of(CrudeHammerCrusherBlockEntity::new, CRUDE_HAMMER_CRUSHER.get()).build(null));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ExampleCrafterBlockEntity>> EXAMPLE_CRAFTER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("example_crafter", () -> BlockEntityType.Builder.of(ExampleCrafterBlockEntity::new, EXAMPLE_CRAFTER.get()).build(null));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PrecisionCraftingTableBlockEntity>> PRECISION_CRAFTING_TABLE_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("precision_crafting_table", () -> BlockEntityType.Builder.of(PrecisionCraftingTableBlockEntity::new, PRECISION_CRAFTING_TABLE.get()).build(null));
 	// #endregion
@@ -208,9 +238,17 @@ public class OmniaEtNihil {
 	// #region Items
 	public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
-	public static final DeferredItem<Item> LARGE_ROCK = ITEMS.registerSimpleItem("large_rock", new Item.Properties());
+	public static final DeferredItem<Item> LARGE_ROCKS = ITEMS.registerSimpleItem("large_rocks", new Item.Properties());
 
 	public static final DeferredItem<Item> GRABBER_JAR = ITEMS.register("grabber_jar", () -> new GrabberJar(new Item.Properties().component(MANA_DATA_COMPONENT.value(), 0)));
+
+	// #region Tools
+
+	// #region Hammers
+
+	// #endregion
+	public static final DeferredItem<Item> IRON_HAMMER = ITEMS.registerSimpleItem("iron_hammer", new Item.Properties().durability(256));
+	// #endregion
 
 	// #region Grinding Rolls
 	public static final DeferredItem<Item> WOODEN_GRINDING_ROLL = ITEMS.registerSimpleItem("wooden_grinding_roll", new Item.Properties());
@@ -232,8 +270,36 @@ public class OmniaEtNihil {
 	public static final DeferredItem<Item> NETHERITE_IMPACTOR = ITEMS.registerSimpleItem("netherite_impactor", new Item.Properties());
 	// #endregion
 
+	// #region Dust
+
 	// #region Impure Dust
 	public static final DeferredItem<Item> IMPURE_IRON_DUST = ITEMS.registerSimpleItem("impure_iron_dust", new Item.Properties());
+	// #endregion
+
+	// #region Fine Dust
+	public static final DeferredItem<Item> FINE_IRON_DUST = ITEMS.registerSimpleItem("fine_iron_dust", new Item.Properties());
+	// #endregion
+
+	// #region Micro Dust
+	public static final DeferredItem<Item> MICRO_IRON_DUST = ITEMS.registerSimpleItem("micro_iron_dust", new Item.Properties());
+	// #endregion
+
+	// #region Ultra Fine Dust
+	public static final DeferredItem<Item> ULTRA_FINE_IRON_DUST = ITEMS.registerSimpleItem("ultra_fine_iron_dust", new Item.Properties());
+	// #endregion
+
+	// #endregion
+
+	// #region Powder
+
+	// #region Fine Powder
+	public static final DeferredItem<Item> FINE_IRON_POWDER = ITEMS.registerSimpleItem("fine_iron_powder", new Item.Properties());
+	// #endregion
+
+	// #region Ultra Fine Powder
+	public static final DeferredItem<Item> ULTRA_FINE_IRON_POWDER = ITEMS.registerSimpleItem("ultra_fine_iron_powder", new Item.Properties());
+	// #endregion
+
 	// #endregion
 
 	// #region Preprocessed Ore
@@ -343,16 +409,23 @@ public class OmniaEtNihil {
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MECHANICAL_TAB = CREATIVE_MODE_TABS.register("mechanical_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.omniaetnihil.mechanical_tab")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> CRUDE_PREPROCESSOR_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
 
 		output.accept(CRUDE_PREPROCESSOR_ITEM.get());
-		output.accept(LARGE_ROCK.get());
 		output.accept(PREPROCESSED_IRON_ORE.get());
+		output.accept(LARGE_ROCKS.get());
 
 		output.accept(CRUDE_JAW_CRUSHER_ITEM.get());
-		output.accept(IMPURE_IRON_DUST.get());
 		output.accept(LARGE_CRUSHED_IRON_ORE.get());
+		output.accept(IMPURE_IRON_DUST.get());
 
+		output.accept(CRUDE_CONE_CRUSHER_ITEM.get());
 		output.accept(MEDIUM_CRUSHED_IRON_ORE.get());
+		output.accept(FINE_IRON_DUST.get());
 
+		output.accept(CRUDE_IMPACT_CRUSHER_ITEM.get());
 		output.accept(SMALL_CRUSHED_IRON_ORE.get());
+
+		output.accept(CRUDE_HAMMER_CRUSHER_ITEM.get());
+		output.accept(FINE_CRUSHED_IRON_ORE.get());
+		output.accept(MICRO_IRON_DUST.get());
 
 		output.accept(WOODEN_GRINDING_ROLL.get());
 		output.accept(STONE_GRINDING_ROLL.get());
@@ -362,6 +435,7 @@ public class OmniaEtNihil {
 		output.accept(DIAMOND_GRINDING_ROLL.get());
 		output.accept(NETHERITE_GRINDING_ROLL.get());
 		output.accept(FINE_CRUSHED_IRON_ORE.get());
+		output.accept(ULTRA_FINE_IRON_DUST.get());
 
 		output.accept(WOODEN_IMPACTOR.get());
 		output.accept(STONE_IMPACTOR.get());
@@ -371,8 +445,10 @@ public class OmniaEtNihil {
 		output.accept(DIAMOND_IMPACTOR.get());
 		output.accept(NETHERITE_IMPACTOR.get());
 		output.accept(ULTRA_FINE_CRUSHED_IRON_ORE.get());
+		output.accept(FINE_IRON_POWDER.get());
 
 		output.accept(GROUND_IRON_ORE.get());
+		output.accept(ULTRA_FINE_IRON_POWDER.get());
 
 		output.accept(WASHED_IRON_ORE.get());
 
@@ -425,6 +501,15 @@ public class OmniaEtNihil {
 	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<JawCrushingRecipe>> JAW_CRUSHING_SERIALIZER = RECIPE_SERIALIZERS.register("jaw_crushing", JawCrushingRecipe.Serializer::new);
 	public static final DeferredHolder<RecipeType<?>, RecipeType<JawCrushingRecipe>> JAW_CRUSHING_TYPE = RECIPE_TYPES.register("jaw_crushing", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "jaw_crushing")));
 
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ConeCrushingRecipe>> CONE_CRUSHING_SERIALIZER = RECIPE_SERIALIZERS.register("cone_crushing", ConeCrushingRecipe.Serializer::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<ConeCrushingRecipe>> CONE_CRUSHING_TYPE = RECIPE_TYPES.register("cone_crushing", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "cone_crushing")));
+
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ImpactCrushingRecipe>> IMPACT_CRUSHING_SERIALIZER = RECIPE_SERIALIZERS.register("impact_crushing", ImpactCrushingRecipe.Serializer::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<ImpactCrushingRecipe>> IMPACT_CRUSHING_TYPE = RECIPE_TYPES.register("impact_crushing", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "impact_crushing")));
+
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HammerCrushingRecipe>> HAMMER_CRUSHING_SERIALIZER = RECIPE_SERIALIZERS.register("hammer_crushing", HammerCrushingRecipe.Serializer::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<HammerCrushingRecipe>> HAMMER_CRUSHING_TYPE = RECIPE_TYPES.register("hammer_crushing", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "hammer_crushing")));
+
 	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PrecisionCraftingRecipe>> PRECISION_CRAFTING_SERIALIZER = RECIPE_SERIALIZERS.register("precision_crafting", PrecisionCraftingRecipe.Serializer::new);
 	public static final DeferredHolder<RecipeType<?>, RecipeType<PrecisionCraftingRecipe>> PRECISION_CRAFTING_TYPE = RECIPE_TYPES.register("precision_crafting", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "precision_crafting")));
 	// #endregion
@@ -476,6 +561,9 @@ public class OmniaEtNihil {
 		event.register(EXAMPLE_CRAFTER_MENU.get(), ExampleCrafterScreen::new);
 		event.register(CRUDE_PREPROCESSOR_MENU.get(), CrudePreprocessorScreen::new);
 		event.register(CRUDE_JAW_CRUSHER_MENU.get(), CrudeJawCrusherScreen::new);
+		event.register(CRUDE_CONE_CRUSHER_MENU.get(), CrudeConeCrusherScreen::new);
+		event.register(CRUDE_IMPACT_CRUSHER_MENU.get(), CrudeImpactCrusherScreen::new);
+		event.register(CRUDE_HAMMER_CRUSHER_MENU.get(), CrudeHammerCrusherScreen::new);
 		event.register(PRECISION_CRAFTING_TABLE_MENU.get(), PrecisionCraftingTableScreen::new);
 	}
 
@@ -502,6 +590,15 @@ public class OmniaEtNihil {
 
 		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CRUDE_JAW_CRUSHER_BLOCK_ENTITY.get(), CrudeJawCrusherBlockEntity::getInventory);
 		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CRUDE_JAW_CRUSHER_BLOCK_ENTITY.get(), CrudeJawCrusherBlockEntity::getEnergyStorage);
+
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CRUDE_CONE_CRUSHER_BLOCK_ENTITY.get(), CrudeConeCrusherBlockEntity::getInventory);
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CRUDE_CONE_CRUSHER_BLOCK_ENTITY.get(), CrudeConeCrusherBlockEntity::getEnergyStorage);
+
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CRUDE_IMPACT_CRUSHER_BLOCK_ENTITY.get(), CrudeImpactCrusherBlockEntity::getInventory);
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CRUDE_IMPACT_CRUSHER_BLOCK_ENTITY.get(), CrudeImpactCrusherBlockEntity::getEnergyStorage);
+
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CRUDE_HAMMER_CRUSHER_BLOCK_ENTITY.get(), CrudeHammerCrusherBlockEntity::getInventory);
+		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CRUDE_HAMMER_CRUSHER_BLOCK_ENTITY.get(), CrudeHammerCrusherBlockEntity::getEnergyStorage);
 
 		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, PRECISION_CRAFTING_TABLE_BLOCK_ENTITY.get(), PrecisionCraftingTableBlockEntity::getEnergyStorage);
 		event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, PRECISION_CRAFTING_TABLE_BLOCK_ENTITY.get(), PrecisionCraftingTableBlockEntity::getFluidHandler);

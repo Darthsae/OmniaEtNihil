@@ -1,7 +1,7 @@
 package com.sockmit2007.omniaetnihil.screen;
 
 import com.sockmit2007.omniaetnihil.OmniaEtNihil;
-import com.sockmit2007.omniaetnihil.block.entity.CrudeJawCrusherBlockEntity;
+import com.sockmit2007.omniaetnihil.block.entity.CrudeConeCrusherBlockEntity;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -15,17 +15,17 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class CrudeJawCrusherMenu extends AbstractContainerMenu {
+public class CrudeConeCrusherMenu extends AbstractContainerMenu {
     private final Container container;
     private final ContainerData data;
     protected final Level level;
 
-    public CrudeJawCrusherMenu(int containerId, Inventory playerInventory) {
+    public CrudeConeCrusherMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(3));
     }
 
-    public CrudeJawCrusherMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(OmniaEtNihil.CRUDE_JAW_CRUSHER_MENU.get(), containerId);
+    public CrudeConeCrusherMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
+        super(OmniaEtNihil.CRUDE_CONE_CRUSHER_MENU.get(), containerId);
         checkContainerSize(container, 3);
         checkContainerDataCount(data, 3);
         this.container = container;
@@ -69,7 +69,7 @@ public class CrudeJawCrusherMenu extends AbstractContainerMenu {
 
     public float getEnergyLevel() {
         int i = this.data.get(2);
-        int j = CrudeJawCrusherBlockEntity.MAX_ENERGY;
+        int j = CrudeConeCrusherBlockEntity.MAX_ENERGY;
         return j != 0 && i != 0 ? Mth.clamp((float) i / (float) j, 0.0F, 1.0F) : 0.0F;
     }
 

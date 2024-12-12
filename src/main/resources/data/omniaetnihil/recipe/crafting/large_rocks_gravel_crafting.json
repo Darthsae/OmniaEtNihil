@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "HR",
+        "R "
+    ],
+    "key": {
+        "H": {
+            "tag": "c:tools/hammer"
+        },
+        "R": {
+            "item": "omniaetnihil:large_rocks"
+        }
+    },
+    "result": {
+        "id": "minecraft:gravel",
+        "count": 4
+    }
+}
